@@ -33,6 +33,11 @@
 #ifndef SHA2_Header_Global
 #define SHA2_Header_Global
 
+#define SHA224 224
+#define SHA256 256
+#define SHA384 384
+#define SHA512 512
+
 #define SHA224_DIGEST_SIZE ( 224 / 8)
 #define SHA256_DIGEST_SIZE ( 256 / 8)
 #define SHA384_DIGEST_SIZE ( 384 / 8)
@@ -45,7 +50,7 @@
 
 #ifndef SHA2_TYPES
 #define SHA2_TYPES
-typedef unsigned char shatype_uint8;
+typedef char shatype_uint8;
 typedef unsigned int shatype_uint32;
 typedef unsigned long long shatype_uint64;
 #endif
@@ -57,7 +62,7 @@ extern "C" {
 struct sha256_ctx_s {
     unsigned int tot_len;
     unsigned int len;
-    unsigned char block[2 * SHA256_BLOCK_SIZE];
+    char block[2 * SHA256_BLOCK_SIZE];
     shatype_uint32 h[8];
 };
 typedef struct sha256_ctx_s sha256_ctx;
@@ -65,7 +70,7 @@ typedef struct sha256_ctx_s sha256_ctx;
 struct sha512_ctx_s {
     unsigned int tot_len;
     unsigned int len;
-    unsigned char block[2 * SHA512_BLOCK_SIZE];
+    char block[2 * SHA512_BLOCK_SIZE];
     shatype_uint64 h[8];
 };
 typedef struct sha512_ctx_s sha512_ctx;
@@ -74,24 +79,26 @@ typedef struct sha512_ctx_s sha384_ctx;
 typedef struct sha256_ctx_s sha224_ctx;
 
 void sha224_init(sha224_ctx* ctx);
-void sha224_update(sha224_ctx* ctx, const unsigned char* message, unsigned len);
-void sha224_final(sha224_ctx* ctx, unsigned char* digest);
-void sha224(const unsigned char* message, unsigned len, unsigned char* digest);
+void sha224_update(sha224_ctx* ctx, const char* message, unsigned len);
+void sha224_final(sha224_ctx* ctx, char* digest);
+void sha224(const char* message, unsigned len, char* digest);
 
 void sha256_init(sha256_ctx* ctx);
-void sha256_update(sha256_ctx* ctx, const unsigned char* message, unsigned len);
-void sha256_final(sha256_ctx* ctx, unsigned char* digest);
-void sha256(const unsigned char* message, unsigned len, unsigned char* digest);
+void sha256_update(sha256_ctx* ctx, const char* message, unsigned len);
+void sha256_final(sha256_ctx* ctx, char* digest);
+void sha256(const char* message, unsigned len, char* digest);
 
 void sha384_init(sha384_ctx* ctx);
-void sha384_update(sha384_ctx* ctx, const unsigned char* message, unsigned len);
-void sha384_final(sha384_ctx* ctx, unsigned char* digest);
-void sha384(const unsigned char* message, unsigned len, unsigned char* digest);
+void sha384_update(sha384_ctx* ctx, const char* message, unsigned len);
+void sha384_final(sha384_ctx* ctx, char* digest);
+void sha384(const char* message, unsigned len, char* digest);
 
 void sha512_init(sha512_ctx* ctx);
-void sha512_update(sha512_ctx* ctx, const unsigned char* message, unsigned len);
-void sha512_final(sha512_ctx* ctx, unsigned char* digest);
-void sha512(const unsigned char* message, unsigned len, unsigned char* digest);
+void sha512_update(sha512_ctx* ctx, const char* message, unsigned len);
+void sha512_final(sha512_ctx* ctx, char* digest);
+void sha512(const char* message, unsigned len, char* digest);
+
+char* easysha(const unsigned algorithmId, const char* message);
 
 #ifdef __cplusplus
 }

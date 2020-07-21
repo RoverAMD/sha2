@@ -1,6 +1,6 @@
 CC ?= cc
 CFLAGS = -Wall -Wextra -std=c99 -I.
-CDEFINES = -DUNROLL_LOOPS
+CDEFINES = -DUNROLL_LOOPS -DALLOW_EASYSHA_WARNINGS
 AR ?= ar
 TARGET = libsha2.a
 
