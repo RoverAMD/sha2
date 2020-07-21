@@ -831,6 +831,19 @@ void eswarn(const char* message, ...) {
 #endif
 }
 
+char* esconv(char* digest, unsigned len) {
+	if (!digest)
+		return NULL;
+	
+	char* result = calloc(len * 2, sizeof(char));
+	
+	for (unsigned i = 0; i < len; i++)
+		sprintf(result + (i * 2), "%02x", digest[i]);
+	
+	free(digest);
+	return result;
+}
+
 char* easysha(const unsigned algorithmId, const char* message) {
 	if (!message) {
 		eswarn("message is NULL, checksum cannot be calculated from NULL data");
@@ -839,24 +852,24 @@ char* easysha(const unsigned algorithmId, const char* message) {
 	
 	switch (algorithmId) {
 		case SHA224: {
-			char* digest = calloc(SHA224_DIGEST_SIZE, sizeof(char));
-			sha224(message, strlen(message), digest);
-			return digest;
+			char* digest = malloc(SHA224_DIGEST_SIZE);
+			sha224(message, strlen(message) + 1, digest);
+			return esconv(digest, SHA224_DIGEST_SIZE);
 		}
 		case SHA256: {
-			char* digest = calloc(SHA256_DIGEST_SIZE, sizeof(char));
-			sha256(message, strlen(message), digest);
-			return digest;
+			char* digest = malloc(SHA256_DIGEST_SIZE);
+			sha256(message, strlen(message) + 1, digest);
+			return esconv(digest, SHA256_DIGEST_SIZE);
 		}
 		case SHA384: {
-			char* digest = calloc(SHA384_DIGEST_SIZE, sizeof(char));
-			sha384(message, strlen(message), digest);
-			return digest;
+			char* digest = malloc(SHA384_DIGEST_SIZE);
+			sha384(message, strlen(message) + 1, digest);
+			return esconv(digest, SHA384_DIGEST_SIZE);
 		}
 		case SHA512: {
-			char* digest = calloc(SHA512_DIGEST_SIZE, sizeof(char));
-			sha512(message, strlen(message), digest);
-			return digest;
+			char* digest = malloc(SHA512_DIGEST_SIZE);
+			sha512(message, strlen(message) + 1, digest);
+			return esconv(digest, SHA512_DIGEST_SIZE);
 		}
 		default: {
 			eswarn("Unknown algorithm ID - %u", algorithmId);

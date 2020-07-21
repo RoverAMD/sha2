@@ -104,5 +104,5 @@ char* easysha(const unsigned algorithmId, const char* message);
 }
 #endif
 
-#endif /* !SHA2_H */
+#endif /* !SHA2_Header_Global */
 
