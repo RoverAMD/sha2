@@ -1,11 +1,21 @@
-all: sha2
+CC ?= cc
+CFLAGS = -Wall -Wextra -std=c99 -I.
+AR ?= ar
+TARGET = libsha2.a
 
-sha2: sha2.o
-	$(CC) $< -o $@
+all: $(TARGET)
+
+lib: $(TARGET)
+
+$(TARGET): sha2.o
+	$(AR) crs $(TARGET) sha2.c
 
 sha2.o: sha2.c sha2.h
-	$(CC) -DTEST_VECTORS -c $<
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+distclean: clean
 
 clean:
-	-rm -rf *.o sha2
+	rm -rf *.o $(TARGET)
+
 
