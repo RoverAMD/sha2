@@ -1,9 +1,8 @@
 /*
  * FIPS 180-2 SHA-224/256/384/512 implementation
- * Last update: 02/02/2007
- * Issue date:  04/30/2005
  *
  * Copyright (C) 2005, 2007 Olivier Gay <olivier.gay@a3.epfl.ch>
+ *               2019, 2020 Tim K <timprogrammer@rambler.ru>
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -46,9 +45,9 @@
 
 #ifndef SHA2_TYPES
 #define SHA2_TYPES
-typedef unsigned char uint8;
-typedef unsigned int  uint32;
-typedef unsigned long long uint64;
+typedef unsigned char shatype_uint8;
+typedef unsigned int shatype_uint32;
+typedef unsigned long long shatype_uint64;
 #endif
 
 #ifdef __cplusplus
@@ -59,14 +58,14 @@ typedef struct {
     unsigned int tot_len;
     unsigned int len;
     unsigned char block[2 * SHA256_BLOCK_SIZE];
-    uint32 h[8];
+    shatype_uint32 h[8];
 } sha256_ctx;
 
 typedef struct {
     unsigned int tot_len;
     unsigned int len;
     unsigned char block[2 * SHA512_BLOCK_SIZE];
-    uint64 h[8];
+    shatype_uint64 h[8];
 } sha512_ctx;
 
 typedef sha512_ctx sha384_ctx;
