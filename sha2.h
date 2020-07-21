@@ -98,7 +98,7 @@ void sha512_update(sha512_ctx* ctx, const char* message, unsigned len);
 void sha512_final(sha512_ctx* ctx, char* digest);
 void sha512(const char* message, unsigned len, char* digest);
 
-char* easysha(const unsigned algorithmId, const char* message);
+char* easysha(const unsigned algorithmId, void* data, unsigned len);
 
 #ifdef __cplusplus
 }

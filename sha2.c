@@ -844,31 +844,31 @@ char* esconv(char* digest, unsigned len) {
 	return result;
 }
 
-char* easysha(const unsigned algorithmId, const char* message) {
-	if (!message) {
-		eswarn("message is NULL, checksum cannot be calculated from NULL data");
+char* easysha(const unsigned algorithmId, void* data, unsigned len) {
+	if (!data || len < 1) {
+		eswarn("data is NULL (len = %u), checksum cannot be calculated from NULL data", len);
 		return NULL;
 	}
 	
 	switch (algorithmId) {
 		case SHA224: {
 			char* digest = malloc(SHA224_DIGEST_SIZE);
-			sha224(message, strlen(message) + 1, digest);
+			sha224(data, len, digest);
 			return esconv(digest, SHA224_DIGEST_SIZE);
 		}
 		case SHA256: {
 			char* digest = malloc(SHA256_DIGEST_SIZE);
-			sha256(message, strlen(message) + 1, digest);
+			sha256(data, len, digest);
 			return esconv(digest, SHA256_DIGEST_SIZE);
 		}
 		case SHA384: {
 			char* digest = malloc(SHA384_DIGEST_SIZE);
-			sha384(message, strlen(message) + 1, digest);
+			sha384(data, len, digest);
 			return esconv(digest, SHA384_DIGEST_SIZE);
 		}
 		case SHA512: {
 			char* digest = malloc(SHA512_DIGEST_SIZE);
-			sha512(message, strlen(message) + 1, digest);
+			sha512(data, len, digest);
 			return esconv(digest, SHA512_DIGEST_SIZE);
 		}
 		default: {

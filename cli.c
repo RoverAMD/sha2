@@ -64,7 +64,7 @@ bool hasFilename(const char* filename) {
 	return (filename && access(filename, F_OK) == 0);
 }
 
-char* readFilename(const char* filename) {
+char* readFilename(const char* filename, size_t* dataSizePtr) {
 	if (!filename)
 		return NULL;
 	
@@ -75,6 +75,9 @@ char* readFilename(const char* filename) {
 	fseek(desc, 0L, SEEK_END);
 	size_t bufSize = ftell(desc);
 	rewind(desc);
+	
+	if (dataSizePtr)
+		(*dataSizePtr) = bufSize;
 	
 	char* buffer = calloc(bufSize, sizeof(char));
 	fread(buffer, sizeof(char), bufSize, desc);
@@ -97,17 +100,21 @@ int main(const int argc, const char** argv) {
 	}
 	
 	char* data = NULL;
+	size_t dataSize = 0;
+	
 	if (isFile) {
 		if (!hasFilename(filename)) {
 			error("'%s' - no such file or the file is unaccessible.", filename);
 			return 2;
 		}
 		
-		data = readFilename(filename);
-	} else
+		data = readFilename(filename, &dataSize);
+	} else {
 		data = strdup(filename);
+		dataSize = strlen(filename);
+	}
 	
-	char* result = easysha((unsigned)(atoi(argv[1])), data);
+	char* result = easysha((unsigned)(atoi(argv[1])), data, dataSize);
 	free(data);
 	
 	if (!result) {
